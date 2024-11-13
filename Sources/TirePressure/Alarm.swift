@@ -1,3 +1,4 @@
+import ApprovalTests
 import Foundation
 
 public class Alarm {
@@ -10,12 +11,17 @@ public class Alarm {
     private var _alarmCount = 0
 
     public func check() {
-        let psiPressureValue = _sensor.PopNextPressurePsiValue()
+        let psiPressureValue = getSensor().PopNextPressurePsiValue()
+        print("value:", psiPressureValue)
 
-        if (psiPressureValue < lowPressureThreshold || highPressureThreshold < psiPressureValue) {
+        if psiPressureValue < lowPressureThreshold || highPressureThreshold < psiPressureValue {
             _alarmOn = true
             _alarmCount += 1
         }
+    }
+
+    public func getSensor() -> Sensor {
+        return _sensor
     }
 
     public var alarmOn: Bool { _alarmOn }
