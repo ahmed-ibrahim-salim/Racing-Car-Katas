@@ -1,14 +1,17 @@
-import ApprovalTests
 import Foundation
 
 public class Alarm {
     private let lowPressureThreshold: Double = 17
     private let highPressureThreshold: Double = 21
 
-    let _sensor = Sensor()
+    let _sensor: SensorProtocol
 
     private var _alarmOn = false
     private var _alarmCount = 0
+
+    init(_ sensor: SensorProtocol = Sensor()) {
+        _sensor = sensor
+    }
 
     public func check() {
         let psiPressureValue = getSensor().PopNextPressurePsiValue()
@@ -20,7 +23,7 @@ public class Alarm {
         }
     }
 
-    public func getSensor() -> Sensor {
+    func getSensor() -> SensorProtocol {
         return _sensor
     }
 

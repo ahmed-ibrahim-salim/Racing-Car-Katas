@@ -1,9 +1,15 @@
 import Foundation
 
-public class Sensor {
+// open closed principle violation
+
+protocol SensorProtocol {
+    func PopNextPressurePsiValue() -> Double
+}
+
+public class Sensor: SensorProtocol {
     let offset: Double = 16
 
-    public func PopNextPressurePsiValue() -> Double {
+    func PopNextPressurePsiValue() -> Double {
         var pressureTelemetryValue: Double = 0
 
         Self.samplePressure(&pressureTelemetryValue)
@@ -12,6 +18,6 @@ public class Sensor {
     }
 
     private static func samplePressure(_ pressureTelemetryValue: inout Double) {
-        pressureTelemetryValue = 6 * Double.random(in: 0..<1) * Double.random(in: 0..<1)
+        pressureTelemetryValue = 6 * Double.random(in: 0 ..< 1) * Double.random(in: 0 ..< 1)
     }
 }

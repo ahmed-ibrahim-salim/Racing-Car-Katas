@@ -3,7 +3,7 @@ import XCTest
 
 final class AlarmTests: XCTestCase {
     func testAlarmIsOffByDefault() {
-        let alarm = TestableAlarm()
+        let alarm = Alarm()
 
         XCTAssertFalse(alarm.alarmOn)
     }
@@ -43,30 +43,19 @@ final class AlarmTests: XCTestCase {
 }
 
 extension AlarmTests {
-    func getAlarm(_ pressure: Double) -> TestableAlarm {
-        let sensor = SensorStub(pressure: pressure)
-        return TestableAlarm(sensor)
+    func getAlarm(_ pressure: Double) -> Alarm {
+        let sensor: SensorProtocol = SensorStub(pressure: pressure)
+        return Alarm(sensor)
     }
 }
 
-class TestableAlarm: Alarm {
-    let sensor: SensorStub
-    init(_ sensor: SensorStub = SensorStub()) {
-        self.sensor = sensor
-    }
-
-    override func getSensor() -> Sensor {
-        return sensor
-    }
-}
-
-class SensorStub: Sensor {
+class SensorStub: SensorProtocol {
     var pressureTelemetryValue: Double
     init(pressure: Double = 0.0) {
         pressureTelemetryValue = pressure
     }
 
-    override func PopNextPressurePsiValue() -> Double {
+    func PopNextPressurePsiValue() -> Double {
         pressureTelemetryValue
     }
 }
