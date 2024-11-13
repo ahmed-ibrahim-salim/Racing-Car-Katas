@@ -1,7 +1,0 @@
-/.idea
-/build
-/vendor
-/.vscode
-/.editorconfig
-/.phpunit.result.cache
-/composer.lock
